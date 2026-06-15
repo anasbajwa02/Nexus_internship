@@ -26,15 +26,15 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 
+import authRoutes from "./src/routes/authRoutes.js";
+
+
+app.use("/api/auth", authRoutes);
+
 // Connect to MongoDB
-
-
-
 connectDB();
 
-app.get("/", (req, res) => {
-    res.send("Welcome to the Nexus API");
-})
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

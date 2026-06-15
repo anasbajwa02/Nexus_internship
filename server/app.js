@@ -27,9 +27,10 @@ app.use(express.static(path.join(__dirname, "public")));
 
 
 import authRoutes from "./src/routes/authRoutes.js";
-
+import profileRoutes from "./src/routes/profileRoutes.js";
 
 app.use("/api/auth", authRoutes);
+app.use("/api/profile", profileRoutes);
 
 // Connect to MongoDB
 connectDB();

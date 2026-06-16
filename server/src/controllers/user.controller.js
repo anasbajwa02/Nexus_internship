@@ -130,3 +130,16 @@ export const getUserProfile = async (req,res)=>{
     );
     }   
 }
+
+export const allUsers = async (req,res)=>{
+    try{
+        const users = await User.find().select("-refreshToken");
+        res.status(200).json(new ApiResponse(200, users, "All users fetched successfully"));
+    }
+    catch(error){
+        console.error(error);
+        return res.status(500).json(
+            new ApiError(error.message || "Internal Server Error")
+        );
+    }
+}

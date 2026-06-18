@@ -30,11 +30,12 @@ import authRoutes from "./src/routes/authRoutes.js";
 import profileRoutes from "./src/routes/profileRoutes.js";
 import collaborationRoutes from "./src/routes/collaborationRoutes.js";
 import dashboardRoutes from "./src/routes/dashboardRoutes.js"
-
+import meetingRoutes from "./src/routes/meetingRoutes.js"
 app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/collaboration", collaborationRoutes);
 app.use("/api/dashboard",dashboardRoutes)
+app.use("/api/meeting",meetingRoutes)
 
 // Connect to MongoDB
 connectDB();

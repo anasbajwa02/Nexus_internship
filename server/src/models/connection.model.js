@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 const connectionSchema = new mongoose.Schema(
   {
+    collaborationId:{
+   type:mongoose.Schema.Types.ObjectId,
+   ref:"Collaboration"
+},
+
     investorId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -18,6 +23,10 @@ const connectionSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    isActive:{
+   type:Boolean,
+   default:true
+}
   },
   {
     timestamps: true,

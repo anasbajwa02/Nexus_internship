@@ -235,13 +235,13 @@ export const updateCollaborationStatus = async (
 
     // If accepted create connection
     if (status === "accepted") {
-      await Connection.create({
-        investorId:
-          collaboration.investorId,
+     await Connection.create({
+   collaborationId: collaboration._id,
 
-        entrepreneurId:
-          collaboration.entrepreneurId,
-      });
+   investorId: collaboration.investorId,
+
+   entrepreneurId: collaboration.entrepreneurId,
+});
     }
 
     const updatedCollaboration =

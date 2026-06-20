@@ -2,7 +2,7 @@
 import Collaboration from "../models/collaboration.model.js";
 import Connection from "../models/connection.model.js";
 import User from "../models/user.model.js";
-
+import Notification from "../models/notification.model.js";
 import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 
@@ -81,7 +81,17 @@ export const sendCollaborationRequest = async (req, res) => {
           "entrepreneurId",
           "name email avatar"
         );
+await Notification.create({
 
+ userId: entrepreneurId,
+
+ type: "collaboration",
+
+ title: "New Collaboration Request",
+
+ message: `${investor.name} sent you a collaboration request`
+
+});
     return res.status(201).json(
       new ApiResponse(
         201,
@@ -256,6 +266,38 @@ export const updateCollaborationStatus = async (
           "entrepreneurId",
           "name email avatar"
         );
+        
+        if (status === "accepted") {
+
+  await Notification.create({
+
+    userId: collaboration.investorId,
+
+    type: "connection",
+
+    title: "Collaboration Accepted",
+
+    message: `${user.name} accepted your collaboration request`
+
+  });
+
+}
+
+if (status === "rejected") {
+
+  await Notification.create({
+
+    userId: collaboration.investorId,
+
+    type: "collaboration",
+
+    title: "Collaboration Rejected",
+
+    message: `${user.name} rejected your collaboration request`
+
+  });
+
+}
 
     return res.status(200).json(
       new ApiResponse(

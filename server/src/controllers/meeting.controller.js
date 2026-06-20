@@ -1,6 +1,6 @@
 import Meeting from "../models/meeting.model.js";
 import Connection from "../models/connection.model.js";
-
+import Notification from "../models/notification.model.js";
 import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 
@@ -138,7 +138,17 @@ export const createMeeting = async (req, res) => {
       );
 
     }
+let receiverId;
 
+if (user._id.toString() === investorId.toString()) {
+
+  receiverId = entrepreneurId;
+
+} else {
+
+  receiverId = investorId;
+
+}
 
     // Create meeting
 
@@ -163,6 +173,19 @@ export const createMeeting = async (req, res) => {
       meetingType
 
     });
+
+    await Notification.create({
+
+ userId: receiverId,
+
+ type: "meeting",
+
+ title: "Meeting Scheduled",
+
+ message: `${user.name} scheduled a meeting`
+
+});
+
 
 
     // Populate response
@@ -394,10 +417,43 @@ export const updateMeetingStatus = async (req, res) => {
         `Cannot change status from ${meeting.status} to ${status}`
       );
     }
+    let receiverId;
+
+if (
+
+ user._id.toString()
+
+ ===
+
+ meeting.investorId.toString()
+
+) {
+
+ receiverId = meeting.entrepreneurId;
+
+}
+
+else {
+
+ receiverId = meeting.investorId;
+
+}
 
     // 7. Update status
     meeting.status = status;
     await meeting.save();
+ 
+    await Notification.create({
+
+ userId: receiverId,
+
+ type: "meeting",
+
+ title: "Meeting Updated",
+
+ message: `${user.name} has ${status} the meeting`
+
+});
 
     // 8. Response
     return res.status(200).json(

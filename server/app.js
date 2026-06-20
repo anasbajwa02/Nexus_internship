@@ -33,6 +33,8 @@ import dashboardRoutes from "./src/routes/dashboardRoutes.js"
 import meetingRoutes from "./src/routes/meetingRoutes.js"
 import chatRoutes from "./src/routes/chatRoutes.js"
 import connectionRoutes from "./src/routes/connectionRoutes.js"
+import notificationRoutes from "./src/routes/notificationRoutes.js"
+
 app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/collaboration", collaborationRoutes);
@@ -40,6 +42,9 @@ app.use("/api/dashboard",dashboardRoutes)
 app.use("/api/meeting",meetingRoutes)
 app.use("/api/message",chatRoutes)
 app.use("/api/connection",connectionRoutes)
+app.use("/api/notification",notificationRoutes)
+
+
 
 
 // Connect to MongoDB

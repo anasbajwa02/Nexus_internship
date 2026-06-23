@@ -22,7 +22,8 @@ const notificationSchema = new mongoose.Schema(
 
       "meeting",
 
-      "chat"
+      "chat",
+      "deal"
 
     ],
 

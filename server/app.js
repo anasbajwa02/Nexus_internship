@@ -35,6 +35,7 @@ import chatRoutes from "./src/routes/chatRoutes.js"
 import connectionRoutes from "./src/routes/connectionRoutes.js"
 import notificationRoutes from "./src/routes/notificationRoutes.js"
 import documentsRoutes from "./src/routes/documentRoutes.js"
+import dealRoutes from "./src/routes/dealRoutes.js"
 
 app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
@@ -45,6 +46,7 @@ app.use("/api/message",chatRoutes)
 app.use("/api/connection",connectionRoutes)
 app.use("/api/notification",notificationRoutes)
 app.use("/api/documents",documentsRoutes)
+app.use("/api/deal",dealRoutes)
 
 
 

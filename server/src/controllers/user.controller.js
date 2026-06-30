@@ -48,12 +48,26 @@ export const registerUser = async (req,res)=>{
         res.cookie("refreshToken", tokens.refreshToken, cookieOptions);
      res.status(201).json(new ApiResponse(201, createdUser, "User registered successfully"));
         
-    }catch(error){
+    }catch (error) {
     console.error(error);
+
+    const apiError = new ApiError(
+    error.statusCode || 500,
+    error.message || "Internal Server Error"
+);
+
+console.log("api error ",apiError);
+console.log("object api error",Object.keys(apiError));
+
+return res.status(apiError.statusCode).json(apiError);
+
     return res.status(error.statusCode || 500).json(
-      new ApiError(error.message || "Internal Server Error")
+        new ApiError(
+            error.statusCode || 500,
+            error.message || "Internal Server Error"
+        )
     );
-    }
+}
 }
 
 export const loginUser = async (req,res)=>{
@@ -81,13 +95,16 @@ export const loginUser = async (req,res)=>{
         res.cookie("refreshToken", tokens.refreshToken, cookieOptions);
         res.status(200).json(new ApiResponse(200, loggedInUser, "User logged in successfully"));
 
-    }catch(error){
+    }catch (error) {
     console.error(error);
-    return res.status(error.statusCode || 500).json(
-      new ApiError(error.message)
-    );
 
-    }
+    return res.status(error.statusCode || 500).json(
+        new ApiError(
+            error.statusCode || 500,
+            error.message || "Internal Server Error"
+        )
+    );
+}
 }
 
 export const logoutUser = async (req,res)=>{
@@ -107,12 +124,16 @@ export const logoutUser = async (req,res)=>{
         .json(new ApiResponse(200, {}, "User logged out successfully"));
       
     }
-    catch(error){
+   catch (error) {
     console.error(error);
+
     return res.status(error.statusCode || 500).json(
-        new ApiResponse(false, null, error || "Internal Server Error")
+        new ApiError(
+            error.statusCode || 500,
+            error.message || "Internal Server Error"
+        )
     );
-    }
+}
 }
 
 export const getUserProfile = async (req,res)=>{
@@ -123,12 +144,16 @@ export const getUserProfile = async (req,res)=>{
             throw new ApiError(404, "User not found");
         }
         res.status(200).json(new ApiResponse(200, userProfile, "User profile fetched successfully"));
-    }catch(error){
+    }catch (error) {
     console.error(error);
+
     return res.status(error.statusCode || 500).json(
-        new ApiError(error.message || "Internal Server Error")
+        new ApiError(
+            error.statusCode || 500,
+            error.message || "Internal Server Error"
+        )
     );
-    }   
+} 
 }
 
 export const allUsers = async (req,res)=>{
@@ -136,10 +161,14 @@ export const allUsers = async (req,res)=>{
         const users = await User.find().select("-refreshToken");
         res.status(200).json(new ApiResponse(200, users, "All users fetched successfully"));
     }
-    catch(error){
-        console.error(error);
-        return res.status(500).json(
-            new ApiError(error.message || "Internal Server Error")
-        );
-    }
+   catch (error) {
+    console.error(error);
+
+    return res.status(error.statusCode || 500).json(
+        new ApiError(
+            error.statusCode || 500,
+            error.message || "Internal Server Error"
+        )
+    );
+}
 }
